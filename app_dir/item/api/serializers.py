@@ -12,11 +12,9 @@ class ItemUrlSerializer(serializers.ModelSerializer):
         ]
         
     def create(self, validated_data):
-        user = self.context['request'].user
         name = validated_data['name']
         url = validated_data['url']
         item_url_obj = ItemUrl(
-            user = user,
             name = name,
             url = url
         )

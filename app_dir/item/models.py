@@ -5,7 +5,6 @@ from django.utils import timezone
 User = get_user_model()
 
 class ItemUrl(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
     url = models.URLField()
 

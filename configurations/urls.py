@@ -6,7 +6,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest')),
     path('api-token-auth/', obtain_jwt_token),
-    path('user/', include(('app_dir.user.urls', 'user'), namespace='user')),
+    # path('user/', include(('app_dir.user.urls', 'user'), namespace='user')),
     path('api/user/', include(('app_dir.user.api.urls', 'user_api'), namespace='user_api')),
     path('api/item/', include(('app_dir.item.api.urls', 'item_api'), namespace='item_api')),
 ]

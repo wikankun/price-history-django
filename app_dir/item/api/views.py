@@ -20,16 +20,13 @@ class ItemUrlListAPIView(ListAPIView):
     pagination_class = PostLimitOffsetPagination
 
     def get_queryset(self, *args, **kwargs):
-        queryset_list = ItemUrl.objects.filter(
-            user = self.request.user
-        )
-
         page_size = 'page_size'
         if self.request.GET.get(page_size):
             pagination.PageNumberPagination.page_size = self.request.GET.get(page_size)
         else:
             pagination.PageNumberPagination.page_size = 10
         query = self.request.GET.get('q')
+        queryset_list = ItemUrl.objects.all()
         if query:
             queryset_list = queryset_list.filter(
                 Q(name__icontains=query) |
@@ -49,21 +46,21 @@ class ItemUrlDetailAPIView(RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ItemUrlSerializer
     def get_queryset(self):
-        return ItemUrl.objects.filter(user=self.request.user)
+        return ItemUrl.objects.all()
 
 
 class ItemUrlDeleteAPIView(DestroyAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ItemUrlSerializer
     def get_queryset(self):
-        return ItemUrl.objects.filter(user=self.request.user)
+        return ItemUrl.objects.all()
 
 
 class UpdateAPIView(RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ItemUrlSerializer
     def get_queryset(self):
-        return ItemUrl.objects.filter(user=self.request.user)
+        return ItemUrl.objects.all()
 
     def perform_update(self, serializer):
         serializer.save(itemurl=self.request.itemurl)
@@ -99,6 +96,7 @@ class ItemPriceHistoryUpdate(APIView):
         s = ScrapperTokopedia(item.url)
         price = s.getPrice()
         print(s.getProductName())
+        print(s.getPrice())
         item_price_obj = ItemPriceHistory(
             item = item,
             price = price
